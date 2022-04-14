@@ -694,6 +694,10 @@ static LRESULT CALLBACK d2dxSubclassWndProc(
 		else
 		{
 			renderContext->UnclipCursor();
+			if (renderContext->GetOptions().GetFlag(OptionsFlag::NoHide))
+			{
+ 			 	 return 0;
+                        }
 		}
 	}
 	else if (uMsg == WM_SYSKEYDOWN || uMsg == WM_KEYDOWN)
@@ -925,12 +929,18 @@ void RenderContext::SetSizes(
 
 	if (!_d2dxContext->GetOptions().GetFlag(OptionsFlag::NoTitleChange))
 	{
+            const std::string& title = _d2dxContext->GetOptions().GetTitle();
+            if (title != "") {
+                ::SetWindowTextA(_hWnd, title.c_str());
+            } else {
 		char newWindowText[256];
 		sprintf_s(newWindowText, "Diablo II DX [%ix%i, scale %i%%]",
 			_gameSize.width,
 			_gameSize.height,
 			(int)(((float)_renderRect.size.height / _gameSize.height) * 100.0f));
 		::SetWindowTextA(_hWnd, newWindowText);
+
+            }
 	}
 
 	D2DX_LOG("Sizes: desktop %ix%i, window %ix%i, game %ix%i, render %ix%i",

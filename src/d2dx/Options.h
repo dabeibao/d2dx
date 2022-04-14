@@ -18,6 +18,7 @@
 */
 #pragma once
 
+#include <string>
 #include "Types.h"
 
 namespace d2dx
@@ -34,6 +35,7 @@ namespace d2dx
 		NoTitleChange,
 		NoVSync,
 		NoMotionPrediction,
+                NoHide,
 
 		DbgDumpTextures,
 
@@ -86,11 +88,16 @@ namespace d2dx
 
 		FilteringOption GetFiltering() const;
 
+            const std::string& GetTitle() const {
+                return _winTitle;
+            }
+
 	private:
 		uint32_t _flags = 0;
 		int32_t _windowScale = 1;
 		Offset _windowPosition{ -1, -1 };
 		Size _userSpecifiedGameSize{ -1, -1 };
 		FilteringOption _filtering{ FilteringOption::HighQuality };
+                std::string _winTitle;
 	};
 }

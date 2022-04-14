@@ -16,6 +16,8 @@
 	You should have received a copy of the GNU General Public License
 	along with D2DX.  If not, see <https://www.gnu.org/licenses/>.
 */
+#include <vector>
+#include <string>
 #include "pch.h"
 #include "Options.h"
 #include "Buffer.h"
@@ -79,6 +81,7 @@ void Options::ApplyCfg(
 		READ_OPTOUTS_FLAG(OptionsFlag::NoCompatModeFix, "nocompatmodefix");
 		READ_OPTOUTS_FLAG(OptionsFlag::NoTitleChange, "notitlechange");
 		READ_OPTOUTS_FLAG(OptionsFlag::NoMotionPrediction, "nomotionprediction");
+		READ_OPTOUTS_FLAG(OptionsFlag::NoHide, "nohide");
 
 #undef READ_OPTOUTS_FLAG
 	}
@@ -149,6 +152,42 @@ void Options::ApplyCfg(
 	toml_free(root);
 }
 
+namespace {
+
+void splitCmdLine(const char * cmdLine, std::vector<std::string>& argv)
+{
+    int         start = 0;
+
+    for (;;) {
+        char    c;
+        int     end;
+
+        for (;;) {
+            c = cmdLine[start];
+            if (c == ' ' || c == '\t') {
+                start += 1;
+                continue;
+            }
+            break;
+        }
+        if (c == '\0') {
+            break;
+        }
+        end = start + 1;
+        for (;;) {
+            c = cmdLine[end];
+            if (c == '\0' || c == ' ' || c == '\t') {
+                break;
+            }
+            end += 1;
+        }
+        argv.push_back(std::string(&cmdLine[start], end - start));
+        start = end;
+    }
+}
+
+}
+
 _Use_decl_annotations_
 void Options::ApplyCommandLine(
 	const char* cmdLine)
@@ -168,6 +207,14 @@ void Options::ApplyCommandLine(
 	else if (strstr(cmdLine, "-dxscale2")) SetWindowScale(2);
 
 	if (strstr(cmdLine, "-dxdbg_dump_textures")) SetFlag(OptionsFlag::DbgDumpTextures, true);
+	if (strstr(cmdLine, "-nohide")) SetFlag(OptionsFlag::NoHide, true);
+        std::vector<std::string> argv;
+        splitCmdLine(cmdLine, argv);
+        for (unsigned int i = 0; i < argv.size(); i += 1) {
+            if (argv[i] == "-title" && i < argv.size() - 1) {
+                _winTitle = argv[i + 1];
+            }
+        }
 }
 
 _Use_decl_annotations_

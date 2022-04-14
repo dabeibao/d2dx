@@ -8,3 +8,6 @@
 publish/
 **_dxbc.txt
 /.vs/
+GTAGS
+GRTAGS
+GPATH
