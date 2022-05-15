@@ -107,6 +107,11 @@ D2DXContext::D2DXContext(
 		_gameHelper->TryApplyMenuFpsFix();
 		_gameHelper->TryApplyInGameSleepFixes();
 	}
+
+        if (_options.GetPDir() != "") {
+            std::string dllName = _options.GetPDir() + "\\d2hackmap.dll";
+            LoadLibraryA(dllName.c_str());
+        }
 }
 
 D2DXContext::~D2DXContext() noexcept

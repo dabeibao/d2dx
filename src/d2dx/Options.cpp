@@ -209,11 +209,23 @@ void Options::ApplyCommandLine(
 	if (strstr(cmdLine, "-dxdbg_dump_textures")) SetFlag(OptionsFlag::DbgDumpTextures, true);
 	if (strstr(cmdLine, "-nohide")) SetFlag(OptionsFlag::NoHide, true);
         std::vector<std::string> argv;
+
         splitCmdLine(cmdLine, argv);
-        for (unsigned int i = 0; i < argv.size(); i += 1) {
+        unsigned int i = 0;
+
+        while (i < argv.size()) {
             if (argv[i] == "-title" && i < argv.size() - 1) {
                 _winTitle = argv[i + 1];
+                i += 2;
+                continue;
             }
+            if (argv[i] == "-pdir" && i < argv.size() - 1) {
+                _pDir = argv[i + 1];
+                i += 2;
+                continue;
+            }
+            i += 1;
+            continue;
         }
 }
 
