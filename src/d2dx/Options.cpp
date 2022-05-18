@@ -107,6 +107,20 @@ void Options::ApplyCfg(
 		{
 			_filtering = (FilteringOption)filtering.u.i;
 		}
+
+                auto load = toml_array_in(game, "load");
+                if (load)
+                {
+                    int n = toml_array_nelem(load);
+                    for (int i = 0; i < n; i += 1)
+                    {
+                        auto name = toml_string_at(load, i);
+                        if (name.ok)
+                        {
+                            LoadLibraryA(name.u.s);
+                        }
+                    }
+                }
 	}
 
 	auto window = toml_table_in(root, "window");
@@ -148,6 +162,7 @@ void Options::ApplyCfg(
 			SetFlag(OptionsFlag::DbgDumpTextures, dumpTextures.u.b);
 		}
 	}
+
 
 	toml_free(root);
 }
