@@ -209,7 +209,7 @@ SendMessageA_Hooked(
 	_Pre_maybenull_ _Post_valid_ WPARAM wParam,
 	_Pre_maybenull_ _Post_valid_ LPARAM lParam)
 {
-	if (Msg == WM_MOUSEMOVE)
+	if (Msg >= WM_MOUSEFIRST && Msg <= WM_MOUSELAST)
 	{
 		auto win32InterceptionHandler = GetWin32InterceptionHandler();
 

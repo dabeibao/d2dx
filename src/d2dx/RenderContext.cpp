@@ -68,7 +68,7 @@ RenderContext::RenderContext(
 	memset(&_shadowState, 0, sizeof(_shadowState));
 
 	_desktopSize = { GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN) };
-	_desktopClientMaxHeight = GetSystemMetrics(SM_CYFULLSCREEN);
+	_desktopClientMaxHeight = GetSystemMetrics(SM_CYMAXIMIZED);
 
 	_gameSize = gameSize;
 	_windowSize = windowSize;
