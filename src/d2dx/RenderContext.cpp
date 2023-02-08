@@ -68,7 +68,10 @@ RenderContext::RenderContext(
 	memset(&_shadowState, 0, sizeof(_shadowState));
 
 	_desktopSize = { GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN) };
-	_desktopClientMaxHeight = GetSystemMetrics(SM_CYMAXIMIZED);
+
+        RECT rc;
+        SystemParametersInfo(SPI_GETWORKAREA, 0, &rc, 0);
+        _desktopClientMaxHeight = rc.bottom - rc.top;
 
 	_gameSize = gameSize;
 	_windowSize = windowSize;
@@ -76,7 +79,6 @@ RenderContext::RenderContext(
 		gameSize,
 		_screenMode == ScreenMode::FullscreenDefault ? _desktopSize : _windowSize,
 		!_d2dxContext->GetOptions().GetFlag(OptionsFlag::NoWide));
-
 #ifndef NDEBUG
 	ShowCursor_Real(TRUE);
 #endif
