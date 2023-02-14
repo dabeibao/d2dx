@@ -1227,7 +1227,7 @@ Size D2DXContext::GetSuggestedCustomResolution()
 {
 	if (_suggestedGameSize.width == 0)
 	{
-		if (_gameHelper->IsProjectDiablo2())
+		if (false && _gameHelper->IsProjectDiablo2())
 		{
 			_suggestedGameSize = { 1068, 600 };
 		}
