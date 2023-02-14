@@ -127,10 +127,10 @@ void Options::ApplyCfg(
 
 	if (window)
 	{
-		auto windowScale = toml_int_in(window, "scale");
+		auto windowScale = toml_double_in(window, "scale");
 		if (windowScale.ok)
 		{
-			SetWindowScale((int32_t)windowScale.u.i);
+			SetWindowScale(windowScale.u.d);
 		}
 
 		auto windowPosition = toml_array_in(window, "position");
@@ -264,13 +264,13 @@ void Options::SetFlag(
 	}
 }
 
-int32_t Options::GetWindowScale() const
+double Options::GetWindowScale() const
 {
 	return _windowScale;
 }
 
 void Options::SetWindowScale(
-	_In_ int32_t windowScale)
+	_In_ double windowScale)
 {
 	_windowScale = min(3, max(1, windowScale));
 }
