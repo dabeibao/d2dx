@@ -1162,8 +1162,8 @@ Offset D2DXContext::OnSetCursorPos(
 		const uint32_t scaledWidth = (uint32_t)(scale * gameSize.width);
 		const float mouseOffsetX = isFullscreen ? (float)(desktopSize.width / 2 - scaledWidth / 2) : 0.0f;
 
-		pos.x = (int32_t)(pos.x * scale + mouseOffsetX);
-		pos.y = (int32_t)(pos.y * scale);
+		pos.x = (int32_t)(pos.x * scale + mouseOffsetX + 0.5);
+		pos.y = (int32_t)(pos.y * scale + 0.5);
 
 		ClientToScreen(hWnd, (LPPOINT)&pos);
 
@@ -1191,8 +1191,8 @@ Offset D2DXContext::OnMouseMoveMessage(
 	const uint32_t scaledWidth = (uint32_t)(scale * gameSize.width);
 	const float mouseOffsetX = isFullscreen ? (float)(desktopSize.width / 2 - scaledWidth / 2) : 0.0f;
 
-	pos.x = (int32_t)(pos.x * scale + mouseOffsetX);
-	pos.y = (int32_t)(pos.y * scale);
+	pos.x = (int32_t)(pos.x * scale + mouseOffsetX + 0.5);
+	pos.y = (int32_t)(pos.y * scale + 0.5);
 
 	return pos;
 }

@@ -736,8 +736,8 @@ static LRESULT CALLBACK d2dxSubclassWndProc(
 		const uint32_t scaledWidth = (uint32_t)(scale * gameSize.width);
 		const float mouseOffsetX = isFullscreen ? (float)(desktopSize.width / 2 - scaledWidth / 2) : 0.0f;
 
-		mousePos.x = (int32_t)(max(0, mousePos.x - mouseOffsetX) / scale);
-		mousePos.y = (int32_t)(mousePos.y / scale);
+		mousePos.x = (int32_t)(max(0, mousePos.x - mouseOffsetX) / scale + 0.5);
+		mousePos.y = (int32_t)(mousePos.y / scale + 0.5);
 
 		lParam = mousePos.x;
 		lParam |= mousePos.y << 16;
